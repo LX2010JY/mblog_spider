@@ -29,3 +29,8 @@ def user(name):
     # return '<h1>hello ,%s</h1>' % name,404
     return render_template('user.html',name=name),404
 
+# 聊天室 socketio
+@main.route('/chat/<name>')
+def chat(name):
+    return render_template('chat.html',name=name)
+
