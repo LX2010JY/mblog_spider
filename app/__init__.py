@@ -9,11 +9,15 @@ from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 
+async_mode = "threading"
+
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
-socketio = SocketIO()
+socketio = SocketIO(async_mode=async_mode)
+
+
 def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
