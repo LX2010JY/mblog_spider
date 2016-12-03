@@ -1,3 +1,4 @@
+# coding:utf-8
 from .. import socketio
 from flask import session,request
 from flask_socketio import SocketIO,emit,join_room,leave_room,close_room,rooms,disconnect

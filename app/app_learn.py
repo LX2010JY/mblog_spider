@@ -1,3 +1,4 @@
+# coding:utf-8
 from flask import Flask,render_template,redirect,abort,session,url_for,flash,current_app
 # 专为flask开发的扩展都在flask.ext 命名空间可以找到，(下面两种方式等效)flask-script 是方便程序运行时设置模式
 # from flask.ext.script import Manager
