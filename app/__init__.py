@@ -10,13 +10,13 @@ from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from config import config
 
-async_mode = "threading"
+async_mode = "gevent"
 
 bootstrap = Bootstrap()
 mail = Mail()
 moment = Moment()
 db = SQLAlchemy()
-socketio = SocketIO(async_mode=async_mode)
+socketio = SocketIO()
 
 
 def create_app(config_name):
@@ -28,7 +28,7 @@ def create_app(config_name):
     mail.init_app(app)
     moment.init_app(app)
     db.init_app(app)
-    socketio.init_app(app)
+    socketio.init_app(app,engineio_logger=True, async_mode='threading')
     # 只能写在下面，据说为了避免循环导入依赖 ， 给程序注册蓝本
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
