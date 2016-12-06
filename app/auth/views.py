@@ -2,7 +2,7 @@ from flask import render_template,url_for,request,flash,redirect
 from flask_login import login_user,logout_user
 from . import auth
 from ..models import  User
-from .forms import LoginForm
+from .forms import LoginForm,RegistrationForm
 
 @auth.route('/login',methods=['GET','POST'])
 def login():
@@ -21,3 +21,10 @@ def logout():
     logout_user()
     flash('you have been logged out.')
     return redirect(url_for('main.index'))
+
+@auth.route('/register',methods=['GET','POST'])
+def register():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        pass
+    return render_template('auth/register.html',form=form)
