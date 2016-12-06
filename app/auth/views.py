@@ -2,8 +2,9 @@ from flask import render_template,url_for,request,flash,redirect
 from flask_login import login_user,logout_user
 from . import auth
 from ..models import  User
+from .. import db
 from .forms import LoginForm,RegistrationForm
-
+import time
 @auth.route('/login',methods=['GET','POST'])
 def login():
     form = LoginForm()
@@ -26,5 +27,8 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        pass
+        user = User(email=form.email.data,username=form.username.data,password=form.password.data,last_login=time.time())
+        db.session.add(user)
+        flash('you can now login')
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html',form=form)
