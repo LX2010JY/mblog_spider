@@ -12,7 +12,7 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(64),unique=True,index=True)
     email = db.Column(db.String(64),unique=True,index=True)
-    last_login = db.Column(db.Integer)
+    last_login = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
     # role_id 是真是的数据包属性，其外键关联的是role表的id属性，这个可以比较好理解
     role_id = db.Column(db.Integer,db.ForeignKey('role.id'))
