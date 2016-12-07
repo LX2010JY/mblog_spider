@@ -64,9 +64,9 @@ def chat(name):
 # 聊天室 socket
 @main.route('/chatroom')
 def chatroom():
-    if session.get('name') is None:
+    if not current_user.is_authenticated:
         flash('请说明您是谁，否则不允许进入聊天室！')
-        return redirect(url_for('main.index'))
-    return render_template('chatroom.html',name=session.get('name'))
+        return redirect(url_for('auth.login'))
+    return render_template('chatroom.html')
 
 

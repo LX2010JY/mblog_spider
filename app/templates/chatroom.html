@@ -4,7 +4,7 @@
 <div class="page-header" style="margin-top:0">
     <div class="panel panel-primary" style="margin:0 auto;max-width:600px;">
         <div class="panel-heading" style="font-size:18px;line-height:20px;font-weight:bold">
-            欢迎您:{{ name }}
+            欢迎您:{{ current_user.username }}
         </div>
         <div class="panel-body" style="padding:10px;">
             <div id="logs" style="height:400px;border:1px solid;background-color:#ddd;overflow-y:scroll"></div>
@@ -57,7 +57,7 @@
             alert('请输入内容！');
             return;
         }
-        socket.emit('chat',{name:'{{ name }}',content:content});
+        socket.emit('chat',{name:'{{ current_user.username }}',content:content});
         $("#words").val('');
     });
 </script>

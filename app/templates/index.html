@@ -6,10 +6,12 @@
 <div class="rows">
     <div class="col-md-5 col-sm-5">
         <div class="page-header">
-            <h1>Hello {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
-            <p>datetime is {{current_time}}</p>
-            <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
-            <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+            <h1>你好， {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+            {% if current_user.is_authenticated %}
+                <p>本次登陆时间为： {{current_user.last_seen}}</p>
+                <p>本地时间为： {{ moment(current_user.last_seen).format('LLL') }}.</p>
+                <p>那是 {{ moment(current_user.last_seen).fromNow(refresh=True) }}</p>
+            {% endif %}
             {{ wtf.quick_form(form) }}
         </div>
     </div>

@@ -3,9 +3,10 @@
 
 {% block page_content %}
 <div class="rows clearfix" style="margin-top:50px;border-bottom:2px dotted #bbb;padding:10px;">
-    <div class="col-md-3 col-xs-3 col-sm-3">
+    <div class="col-md-3 col-xs-3 col-sm-3" style="padding-top:40px;">
         {% if current_user.headsculpture %}
-            <img class="img-thumbnail" src="{{ url_for('static',filename=current.headsculpture) }}" width=""100%/>
+
+            <img class="img-thumbnail" src="{{ url_for('static',filename=current_user.headsculpture) }}" width=""100%/>
         {% else %}
             <img class="img-thumbnail" src="{{ url_for('static',filename='flasky.jpg') }}" width="100%"/>
         {% endif %}

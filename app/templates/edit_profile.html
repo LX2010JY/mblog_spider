@@ -2,13 +2,18 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block title %}编辑个人信息{% endblock %}
 {% block page_content %}
-
-<div class="col-md-8 col-md-offset-4" style="color: lightsalmon">
-    <div class="page-header">
-        <h1>编辑个人信息</h1>
+<div>
+    <div class="col-md-3" style="text-align:center">
+        <img class="img-thumbnail" style="margin-top:100px" src="{{ url_for('static',filename=current_user.headsculpture) }}">
+        <button id="chhead" style="margin-top:10px;" class="btn btn-warning">修改头像</button>
     </div>
-    <div>
-        {{ wtf.quick_form(form) }}
+    <div class="col-md-8 col-md-offset-1" style="color: lightsalmon">
+        <div class="page-header">
+            <h1>编辑个人信息</h1>
+        </div>
+        <div>
+            {{ wtf.quick_form(form) }}
+        </div>
     </div>
 </div>
 {% endblock %}
