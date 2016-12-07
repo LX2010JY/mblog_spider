@@ -1,11 +1,11 @@
 # coding:utf-8
 from datetime import datetime
 from flask import render_template,session,redirect,url_for,flash
-
+from flask_login import current_user
 from . import main
-from .forms import NameForm
+from .forms import NameForm,PostForm
 from .. import db
-from ..models import User
+from ..models import User,Mblog
 
 
 @main.route('/',methods=['GET','POST'])
@@ -14,15 +14,21 @@ def index():
         视图函数，用于返回包含HTML的响应
     :return:
     '''
-    # return '<h1>Hello World</h1>'
-    form = NameForm()
+    form = PostForm()
     if form.validate_on_submit():
+        if not current_user.is_authenticated:
+            flash('必须先登录才能发送')
+            return redirect(url_for('main.index'))
         # 数据存入session中
-        if session.get('name') is not None and session.get('name') != form.name.data:
-            flash('Looks like you have changed your name!')
-        session['name'] = form.name.data
+        # if session.get('name') is not None and session.get('name') != form.name.data:
+        #     flash('Looks like you have changed your name!')
+        # session['name'] = form.name.data
+        mblog = Mblog(body=form.body.data,author=current_user._get_current_object())
+        db.session.add(mblog)
+        db.session.commit()
         return redirect(url_for('main.index'))
-    return render_template('index.html',form=form,name=session.get('name'),current_time=datetime.utcnow())
+    mblogs = Mblog.query.order_by(Mblog.timestamp.desc()).all()
+    return render_template('index.html',form=form,mblogs=mblogs,current_time=datetime.utcnow())
 
 # <> 中包含的是动态内容，默认是字符串，也可以通过<int:id>方式指定为int
 @main.route('/user/<name>')

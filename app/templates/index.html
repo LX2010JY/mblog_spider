@@ -3,11 +3,41 @@
 {% block title %}Flasky{% endblock %}
 
 {% block page_content %}
-<div class="page-header">
-    <h1>Hello {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
-    <p>datetime is {{current_time}}</p>
-    <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
-    <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+<div class="rows">
+    <div class="col-md-5">
+        <div class="page-header" style="position:fixed">
+            <h1>Hello {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
+            <p>datetime is {{current_time}}</p>
+            <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
+            <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <div class="col-md-7">
+        <ul class="posts" style="padding:0">
+            {% for mblog in mblogs %}
+            <li class="post" style="display:block;margin:20px 0;">
+                <div class="rows clearfix">
+                <div class="col-md-1" style="vertical-align:middle">
+                    <a href="url_for('static',filename='flasky.jpg')">
+                        <img style="width:100%" class="img-circle profile-thumbnail" src="{{ url_for('static',filename='flasky.jpg') }}" />
+                    </a>
+                </div>
+                <div class="col-md-9">
+                    {{ mblog.body }}
+                </div>
+                <div class="col-md-2">
+                    <div class="post-date">{{ moment(mblog.timestamp).fromNow() }}</div>
+                    <div class="post-author">
+                        <a href="{{ url_for('static',filename='flasky.jpg')  }}">
+                            {{ mblog.author.username }}
+                        </a>
+                    </div>
+                </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 </div>
-    {{ wtf.quick_form(form) }}
 {% endblock %}

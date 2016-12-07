@@ -12,7 +12,7 @@ from flask_login import LoginManager
 
 from config import config
 
-async_mode = "gevent"
+async_mode = "threading"
 
 bootstrap = Bootstrap()
 mail = Mail()
