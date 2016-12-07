@@ -4,8 +4,8 @@
 
 {% block page_content %}
 <div class="rows">
-    <div class="col-md-5">
-        <div class="page-header" style="position:fixed">
+    <div class="col-md-5 col-sm-5">
+        <div class="page-header">
             <h1>Hello {% if current_user.is_authenticated %}{{ current_user.username }}{% else %}Stranger{% endif %}!</h1>
             <p>datetime is {{current_time}}</p>
             <p>The local date and time is {{ moment(current_time).format('LLL') }}.</p>
@@ -13,20 +13,20 @@
             {{ wtf.quick_form(form) }}
         </div>
     </div>
-    <div class="col-md-7">
+    <div class="col-md-7 col-sm-7">
         <ul class="posts" style="padding:0">
             {% for mblog in mblogs %}
             <li class="post" style="display:block;margin:20px 0;">
                 <div class="rows clearfix">
-                <div class="col-md-1" style="vertical-align:middle">
-                    <a href="url_for('static',filename='flasky.jpg')">
-                        <img style="width:100%" class="img-circle profile-thumbnail" src="{{ url_for('static',filename='flasky.jpg') }}" />
+                <div class="col-md-2 col-sm-2 col-xs-2" style="vertical-align:middle">
+                    <a href="{{ url_for('static',filename='flasky.jpg') }}">
+                        <img style="width:100%" class="img-thumbnail profile-thumbnail" src="{{ url_for('static',filename='flasky.jpg') }}" />
                     </a>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8 col-sm-8 col-xs-8">
                     {{ mblog.body }}
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 col-sm-2 col-xs-2">
                     <div class="post-date">{{ moment(mblog.timestamp).fromNow() }}</div>
                     <div class="post-author">
                         <a href="{{ url_for('static',filename='flasky.jpg')  }}">

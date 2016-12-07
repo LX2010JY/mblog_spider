@@ -13,8 +13,15 @@ class User(UserMixin,db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(64),unique=True,index=True)
     email = db.Column(db.String(64),unique=True,index=True)
+    headsculpture = db.Column(db.String(128))
     last_login = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
+    name = db.Column(db.String(64))
+    location = db.Column(db.String(64))
+    about_me = db.Column(db.Text())
+    # datetime.utcnow 本身是个函数，但是这里不加括号
+    member_since = db.Column(db.DateTime(),default = datetime.utcnow)
+    last_seen = db.Column(db.DateTime(),default=datetime.utcnow)
     # role_id 是真是的数据包属性，其外键关联的是role表的id属性，这个可以比较好理解
     role_id = db.Column(db.Integer,db.ForeignKey('role.id'))
 
@@ -36,7 +43,10 @@ class User(UserMixin,db.Model):
     def verify_password(self,password):
         return check_password_hash(self.password_hash,password)
 
-
+    def ping(self):
+        # 每次登陆刷新上次登陆时间
+        self.last_seen = datetime.utcnow()
+        db.session.add(self)
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
