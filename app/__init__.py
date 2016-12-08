@@ -11,8 +11,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
 from config import config
-
-async_mode = "threading"
+# import eventlet
+async_mode = "eventlet"
 
 bootstrap = Bootstrap()
 mail = Mail()
@@ -39,4 +39,6 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
     from .auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint,url_prefix='/auth')
+    from .chat import chat as chat_blueprint
+    app.register_blueprint(chat_blueprint,url_prefix='/chat')
     return app
